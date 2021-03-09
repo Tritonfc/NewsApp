@@ -1,9 +1,12 @@
 package com.tobe.newsapp.di
 
+import android.content.Context
 import com.tobe.newsapp.api.NewsApi
+import com.tobe.newsapp.data.db.ArticleDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -12,7 +15,7 @@ import javax.inject.Singleton
 
 
 @Module
-@InstallIn(SingletonComponent :: class)
+@InstallIn(SingletonComponent::class)
 object AppModule {
 
 
@@ -24,5 +27,18 @@ object AppModule {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create()
+
+
+    @Singleton
+    @Provides
+    fun provideRoomDb(@ApplicationContext appContext: Context): ArticleDatabase {
+        return ArticleDatabase(appContext)
+
+    }
+
+    @Singleton
+    @Provides
+    fun provideDao(db: ArticleDatabase) = db.getArticleDao()
+
 
 }
