@@ -26,7 +26,12 @@ object AppModule {
             .baseUrl(NewsApi.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create()
+
+
+
+    @Provides
+    @Singleton
+    fun provideNewsApi(retrofit: Retrofit): NewsApi = retrofit.create(NewsApi :: class.java)
 
 
     @Singleton

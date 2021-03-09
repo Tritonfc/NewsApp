@@ -39,7 +39,7 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
         val article = differ.currentList[position]
         holder.itemView.apply {
             Glide.with(this)
-                .load(article.url)
+                .load(article.urlToImage)
                 .into(ivArticleImage)
 
             tvSource.text = article.source.name
