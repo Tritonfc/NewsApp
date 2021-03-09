@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tobe.newsapp.api.NewsResponse
+import com.tobe.newsapp.data.models.Article
 import com.tobe.newsapp.data.repository.NewsRepository
 import com.tobe.newsapp.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -58,5 +59,16 @@ class NewsViewModel @Inject constructor(
             }
         }
         return Resource.Error(response.message())
+    }
+
+    fun saveArticle(article: Article) = viewModelScope.launch {
+        repository.upsert(article)
+    }
+
+    fun getSavedNews() = repository.getSavedNews()
+
+
+    fun deleteArticle(article: Article) = viewModelScope.launch {
+        repository.delete(article)
     }
 }
